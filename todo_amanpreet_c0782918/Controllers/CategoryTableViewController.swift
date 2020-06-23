@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class CategoryTableViewController: UITableViewController {
+    
+    var category = [Category]()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,29 +22,60 @@ class CategoryTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+         loadFolder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
+    func loadFolder() {
+    let request: NSFetchRequest<Category> = Category.fetchRequest()
+        
+        do {
+           category = try context.fetch(request)
+        } catch  {
+            print("Error Loading Folders: \(error.localizedDescription)")
+        }
+    }
+
+    func savefolders()  {
+        do {
+            try context.save()
+            self.tableView.reloadData()
+        } catch  {
+            print("Error Saving Folders: \(error.localizedDescription)")
+        }
     }
 
     // MARK: - Table view data source
+    
+    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return category.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+          let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
 
-        // Configure the cell...
+            cell.textLabel?.text = category[indexPath.row].name
+//            cell.textLabel?.textColor = .lightGray
+//            cell.detailTextLabel?.textColor = .lightGray
+            cell.detailTextLabel?.text = "\(category[indexPath.row].tasks?.count ?? 0)"
+            cell.imageView?.image = UIImage(systemName: "folder")
 
-        return cell
+            return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -77,14 +112,18 @@ class CategoryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let destination = segue.destination as! TasksTableViewController
+               if let indexPath = tableView.indexPathForSelectedRow{
+//                   destination.selectedFolder = category[indexPath.row]
+               }
     }
-    */
+    
 
 }

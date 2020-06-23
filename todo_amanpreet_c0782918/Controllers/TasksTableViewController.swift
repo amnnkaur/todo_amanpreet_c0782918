@@ -7,8 +7,23 @@
 //
 
 import UIKit
+import CoreData
 
 class TasksTableViewController: UITableViewController {
+    
+    var taskValue: String?
+    var tasks = [Tasks]()
+    var selectedFolder: Category? {
+        //observer for checking filled or not
+        didSet {
+            loadNotes()
+        }
+    }
+    
+    var editMode: Bool = false
+    
+    // create context
+     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,17 +34,61 @@ class TasksTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+           
+           tableView.reloadData()
+           
+       }
+    
+     func loadNotes() {
+               let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+               let folderPredicate = NSPredicate(format: "parentCategory.name=%@", selectedFolder!.name!)
+               request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+               request.predicate = folderPredicate
+               
+               do {
+                   tasks = try context.fetch(request)
+               } catch {
+                   print("Error loading notes: \(error.localizedDescription)")
+               }
+           }
+    
+    //MARK: delete note
+       func deleteNote(task: Tasks) {
+           context.delete(task)
+       }
+       
+       //MARK: saveNote
+       func saveNote() {
+           do {
+               try context.save()
+           } catch  {
+               print("Error saving the context: \(error.localizedDescription)")
+           }
+       }
 
+    //MARK: update note
+        func updateNote(with title: String) {
+            tasks = []
+            let newNote = Tasks(context: context)
+            newNote.title = title
+            newNote.parentCategory = selectedFolder
+    //        notes.append(newNote)
+            saveNote()
+            loadNotes()
+        }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return tasks.count
     }
 
     /*
@@ -77,14 +136,43 @@ class TasksTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+//
+//               if let destination = segue.destination as? TaskViewController{
+//                   destination.delegate = self
+//
+//                   if let cell =  sender as? UITableViewCell{
+//                       if let index = tableView.indexPath(for: cell)?.row{
+//                           destination.selectedNote = Tasks[index]
+//                       }
+//                   }
+//               }
+               
+//               if let destination = segue.destination as? MoveToViewController{
+//                   if let indexPaths = tableView.indexPathsForSelectedRows{
+//                       let rows = indexPaths.map {$0.row}
+//                       destination.selectedNotes = rows.map {notes[$0]}
+//                                }
+//               }
     }
-    */
+    
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        // if editemode is true should make it true
+        
+        guard identifier != "movePerformSegue" else {
+            return true
+        }
+        
+        return editMode ? false : true
+    }
+
 
 }

@@ -65,7 +65,13 @@
                             <outlet property="delegate" destination="t8P-aZ-RPI" id="r1W-1R-kTx"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Category" id="eI6-G0-P80"/>
+                    <navigationItem key="navigationItem" title="Category" id="eI6-G0-P80">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="folder.badge.plus" catalog="system" id="zag-ng-hRw">
+                            <connections>
+                                <action selector="addCategory:" destination="t8P-aZ-RPI" id="tlZ-vJ-vUT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0l4-Ni-VeO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -80,11 +86,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" textLabel="2E6-Ps-kv9" detailTextLabel="RZh-vE-bA0" style="IBUITableViewCellStyleSubtitle" id="1rM-Au-Op1">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="taskCell" textLabel="2E6-Ps-kv9" detailTextLabel="RZh-vE-bA0" style="IBUITableViewCellStyleSubtitle" id="1rM-Au-Op1">
                                 <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1rM-Au-Op1" id="kJw-ut-iQ4">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="55.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2E6-Ps-kv9">
@@ -113,11 +119,54 @@
                             <outlet property="delegate" destination="3Ak-Dq-qlG" id="Evb-FR-rpR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tasks" id="r6a-PK-uoe"/>
+                    <toolbarItems>
+                        <barButtonItem title="Item" image="trash" catalog="system" id="EJ3-jp-8EL">
+                            <connections>
+                                <action selector="deleteBtn:" destination="3Ak-Dq-qlG" id="vSy-gK-y05"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="BFY-wu-RCb"/>
+                        <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="YF8-4Q-oIv">
+                            <connections>
+                                <action selector="moveToBtn:" destination="3Ak-Dq-qlG" id="6gh-LX-dXF"/>
+                                <segue destination="pOd-qs-acG" kind="show" id="ZIN-a2-I3V"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zEH-3t-c27"/>
+                        <barButtonItem title="Item" image="square.and.pencil" catalog="system" id="hld-Po-THM">
+                            <connections>
+                                <action selector="addTask:" destination="3Ak-Dq-qlG" id="Qi3-9S-Xxf"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Tasks" id="r6a-PK-uoe">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="H2h-rE-QuR">
+                            <connections>
+                                <action selector="editTask:" destination="3Ak-Dq-qlG" id="5IU-m2-Zk2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tpa-08-sgF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2445" y="102"/>
+        </scene>
+        <!--Move To View Controller-->
+        <scene sceneID="QrF-2K-ji5">
+            <objects>
+                <viewController id="pOd-qs-acG" customClass="MoveToViewController" customModule="todo_amanpreet_c0782918" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XLL-IF-IWD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="oQz-S6-yEj"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XnH-pj-PFD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cEX-10-kYr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2445" y="812"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="p2R-Pe-v7S">
@@ -135,7 +184,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vzq-He-RqT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="840.57971014492762" y="102.45535714285714"/>
+            <point key="canvasLocation" x="1026" y="102"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="folder.badge.plus" catalog="system" width="128" height="86"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="118"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
+    </resources>
 </document>

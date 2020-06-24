@@ -124,6 +124,8 @@ class CategoryTableViewController: UITableViewController {
 //                   destination.selectedFolder = category[indexPath.row]
                }
     }
+    @IBAction func addCategory(_ sender: UIBarButtonItem) {
+    }
     
 
 }

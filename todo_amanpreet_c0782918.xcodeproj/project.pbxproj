@@ -16,6 +16,7 @@
 		2A5920FE24A273E400FF3539 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A5920FC24A273E400FF3539 /* LaunchScreen.storyboard */; };
 		2A59210624A2856C00FF3539 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A59210524A2856C00FF3539 /* CategoryTableViewController.swift */; };
 		2A59210B24A2883E00FF3539 /* TasksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A59210A24A2883E00FF3539 /* TasksTableViewController.swift */; };
+		2A59210D24A2A78400FF3539 /* MoveToViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A59210C24A2A78400FF3539 /* MoveToViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		2A5920FF24A273E400FF3539 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A59210524A2856C00FF3539 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		2A59210A24A2883E00FF3539 /* TasksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksTableViewController.swift; sourceTree = "<group>"; };
+		2A59210C24A2A78400FF3539 /* MoveToViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				2A5920F224A273E200FF3539 /* TaskViewController.swift */,
 				2A59210524A2856C00FF3539 /* CategoryTableViewController.swift */,
 				2A59210A24A2883E00FF3539 /* TasksTableViewController.swift */,
+				2A59210C24A2A78400FF3539 /* MoveToViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				2A59210B24A2883E00FF3539 /* TasksTableViewController.swift in Sources */,
 				2A5920F324A273E200FF3539 /* TaskViewController.swift in Sources */,
+				2A59210D24A2A78400FF3539 /* MoveToViewController.swift in Sources */,
 				2A5920EF24A273E200FF3539 /* AppDelegate.swift in Sources */,
 				2A59210624A2856C00FF3539 /* CategoryTableViewController.swift in Sources */,
 				2A5920F124A273E200FF3539 /* SceneDelegate.swift in Sources */,

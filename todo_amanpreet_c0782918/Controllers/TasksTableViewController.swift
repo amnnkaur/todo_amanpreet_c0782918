@@ -162,7 +162,17 @@ class TasksTableViewController: UITableViewController {
 //                                }
 //               }
     }
+    @IBAction func deleteBtn(_ sender: UIBarButtonItem) {
+    }
     
+    @IBAction func moveToBtn(_ sender: UIBarButtonItem) {
+    }
+    
+    @IBAction func addTask(_ sender: UIBarButtonItem) {
+    }
+    
+    @IBAction func editTask(_ sender: UIBarButtonItem) {
+    }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // if editemode is true should make it true

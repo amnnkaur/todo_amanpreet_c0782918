@@ -7,8 +7,21 @@
 //
 
 import UIKit
+import CoreData
 
 class MoveToViewController: UIViewController {
+    
+    
+       var category = [Category]()
+       ///computed property
+       var selectedNotes: [Tasks]? {
+           didSet{
+               loadFolders()
+           }
+       }
+
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+       
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +29,22 @@ class MoveToViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    func loadFolders() {
+            
+        let request: NSFetchRequest<Category> = Category.fetchRequest()
+              
+    // predicate if you want
+              /*
+               write your code here
+               */
+              
+            do {
+                category = try context.fetch(request)
+    //            print(folders.count)
+            } catch  {
+                print("Error fetching data of folders: \(error.localizedDescription)")
+            }
+        }
 
     /*
     // MARK: - Navigation

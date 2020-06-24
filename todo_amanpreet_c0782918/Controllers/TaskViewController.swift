@@ -9,6 +9,19 @@
 import UIKit
 
 class TaskViewController: UIViewController {
+    
+    var selectedNote: Tasks? {
+            didSet{
+                // write code later
+                editMode = true
+            }
+        }
+       
+        var editMode: Bool = false
+        
+    // delegate for noteTable VC
+        var delegate: TasksTableViewController?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

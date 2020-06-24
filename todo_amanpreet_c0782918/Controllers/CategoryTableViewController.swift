@@ -121,11 +121,46 @@ class CategoryTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         let destination = segue.destination as! TasksTableViewController
                if let indexPath = tableView.indexPathForSelectedRow{
-//                   destination.selectedFolder = category[indexPath.row]
+                   destination.selectedFolder = category[indexPath.row]
                }
     }
     @IBAction func addCategory(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Folder", message: "", preferredStyle: UIAlertController.Style.alert)
+        let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
+            let folderNames = self.category.map{$0.name}
+            guard !folderNames.contains(textField.text) else {
+                return self.showAlert()
+            }
+            let newFolder = Category(context: self.context)
+            
+            newFolder.name = textField.text
+            self.category.append(newFolder)
+            self.savefolders()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        // change the font color of cancel
+        cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
+        
+        
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        alert.addTextField { (field) in
+            textField = field
+            textField.placeholder = "Category Name"
+        }
+        
+        present(alert, animated: true, completion: nil)
     }
     
+    func showAlert() {
+          let alert = UIAlertController(title: "Alert", message: "Folder Name Already Exist", preferredStyle: .alert)
+          let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+          okAction.setValue(UIColor.orange, forKey: "titleTextColor")
+          alert.addAction(okAction)
+          present(alert, animated: true, completion: nil)
+      }
 
 }

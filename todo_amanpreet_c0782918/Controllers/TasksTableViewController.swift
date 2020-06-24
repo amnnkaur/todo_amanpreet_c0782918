@@ -11,6 +11,9 @@ import CoreData
 
 class TasksTableViewController: UITableViewController {
     
+    @IBOutlet weak var trashBtn: UIBarButtonItem!
+    @IBOutlet weak var moveToBtn: UIBarButtonItem!
+    
     var taskValue: String?
     var tasks = [Tasks]()
     var selectedFolder: Category? {
@@ -91,35 +94,44 @@ class TasksTableViewController: UITableViewController {
         return tasks.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath)
+        
+        let task = tasks[indexPath.row]
+        cell.textLabel?.text = task.title
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .lightGray
+        cell.selectedBackgroundView = backgroundView
 
         return cell
     }
-    */
+    
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+                deleteNote(task: tasks[indexPath.row])
+                saveNote()
+                tasks.remove(at: indexPath.row)
+                       
+                       // Delete the row from the data source
+                tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
@@ -144,34 +156,41 @@ class TasksTableViewController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
-//
-//               if let destination = segue.destination as? TaskViewController{
-//                   destination.delegate = self
-//
-//                   if let cell =  sender as? UITableViewCell{
-//                       if let index = tableView.indexPath(for: cell)?.row{
-//                           destination.selectedNote = Tasks[index]
-//                       }
-//                   }
-//               }
+
+               if let destination = segue.destination as? TaskViewController{
+                   destination.delegate = self
+
+                   if let cell =  sender as? UITableViewCell{
+                       if let index = tableView.indexPath(for: cell)?.row{
+                        destination.selectedNote = tasks[index]
+                       }
+                   }
+               }
                
-//               if let destination = segue.destination as? MoveToViewController{
-//                   if let indexPaths = tableView.indexPathsForSelectedRows{
-//                       let rows = indexPaths.map {$0.row}
-//                       destination.selectedNotes = rows.map {notes[$0]}
-//                                }
-//               }
+               if let destination = segue.destination as? MoveToViewController{
+                   if let indexPaths = tableView.indexPathsForSelectedRows{
+                       let rows = indexPaths.map {$0.row}
+                       destination.selectedNotes = rows.map {tasks[$0]}
+                                }
+               }
     }
     @IBAction func deleteBtn(_ sender: UIBarButtonItem) {
-    }
-    
-    @IBAction func moveToBtn(_ sender: UIBarButtonItem) {
-    }
-    
-    @IBAction func addTask(_ sender: UIBarButtonItem) {
+        if let indexPaths = tableView.indexPathsForSelectedRows{
+                   let rows = (indexPaths.map {$0.row}).sorted(by: >)
+                   let _  = rows.map{deleteNote(task: tasks[$0])}
+                   let _ = rows.map {tasks.remove(at: $0)}
+                   
+                   tableView.reloadData()
+                   
+                   saveNote()
+               }
     }
     
     @IBAction func editTask(_ sender: UIBarButtonItem) {
+        editMode = !editMode
+               tableView.setEditing(editMode ? true: false, animated: true)
+               trashBtn.isEnabled = !trashBtn.isEnabled
+               moveToBtn.isEnabled = !moveToBtn.isEnabled
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -184,5 +203,17 @@ class TasksTableViewController: UITableViewController {
         return editMode ? false : true
     }
 
+    @IBAction func unwindToTaskTableVC(_ unwindSegue: UIStoryboardSegue) {
+    //        let sourceViewController = unwindSegue.source
+            // Use data from the view controller which initiated the unwind segue
+            print("Unwind segue")
+           
+            saveNote()
+            loadNotes()
+            
+            self.tableView.reloadData()
+            
+            tableView.setEditing(false, animated: false)
+        }
 
 }

@@ -120,24 +120,20 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Item" image="trash" catalog="system" id="EJ3-jp-8EL">
+                        <barButtonItem enabled="NO" title="Item" image="trash" catalog="system" id="EJ3-jp-8EL">
                             <connections>
                                 <action selector="deleteBtn:" destination="3Ak-Dq-qlG" id="vSy-gK-y05"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="BFY-wu-RCb"/>
-                        <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="YF8-4Q-oIv">
+                        <barButtonItem enabled="NO" title="Item" image="arrowshape.turn.up.right" catalog="system" id="YF8-4Q-oIv">
                             <connections>
                                 <action selector="moveToBtn:" destination="3Ak-Dq-qlG" id="6gh-LX-dXF"/>
                                 <segue destination="pOd-qs-acG" kind="show" id="ZIN-a2-I3V"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="zEH-3t-c27"/>
-                        <barButtonItem title="Item" image="square.and.pencil" catalog="system" id="hld-Po-THM">
-                            <connections>
-                                <action selector="addTask:" destination="3Ak-Dq-qlG" id="Qi3-9S-Xxf"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem title="Item" image="square.and.pencil" catalog="system" id="hld-Po-THM"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Tasks" id="r6a-PK-uoe">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="H2h-rE-QuR">
@@ -147,6 +143,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="moveToBtn" destination="YF8-4Q-oIv" id="Zto-d7-6Ru"/>
+                        <outlet property="trashBtn" destination="EJ3-jp-8EL" id="pi9-yN-mmz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tpa-08-sgF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

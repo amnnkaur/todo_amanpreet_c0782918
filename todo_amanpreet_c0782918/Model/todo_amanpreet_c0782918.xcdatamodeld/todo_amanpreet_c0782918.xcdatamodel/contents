@@ -7,11 +7,12 @@
     <entity name="Tasks" representedClassName="Tasks" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="days" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="taskDesc" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="tasks" inverseEntity="Category"/>
     </entity>
     <elements>
         <element name="Category" positionX="-63" positionY="-18" width="128" height="73"/>
-        <element name="Tasks" positionX="-54" positionY="-9" width="128" height="103"/>
+        <element name="Tasks" positionX="-54" positionY="-9" width="128" height="118"/>
     </elements>
 </model>

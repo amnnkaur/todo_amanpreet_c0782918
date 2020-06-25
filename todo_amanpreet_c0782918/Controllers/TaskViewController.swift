@@ -18,6 +18,7 @@ class TaskViewController: UIViewController {
     @IBOutlet weak var taskName: UITextField!
     @IBOutlet weak var noOfDays: UITextField!
     @IBOutlet weak var dateTxtField: UITextField!
+    @IBOutlet weak var taskDescription: UITextField!
     let datePickerView:UIDatePicker = UIDatePicker()
     
     
@@ -68,11 +69,12 @@ class TaskViewController: UIViewController {
                let addAction = UIAlertAction(title: "Yes", style: .default) { (action) in
            
                
-                self.delegate?.updateNote(with: self.taskName.text!, days: Int(self.noOfDays.text!)!, date: self.datePickerView.date)
+                self.delegate?.updateNote(with: self.taskName.text!, days: Int(self.noOfDays.text!)!, date: self.datePickerView.date, description: self.taskDescription.text!)
                 
                 self.taskName.text = ""
                 self.noOfDays.text = ""
                 self.dateTxtField.text = ""
+                self.taskDescription.text = ""
         
                }
                

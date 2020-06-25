@@ -34,15 +34,14 @@ class MoveToViewController: UIViewController {
         let request: NSFetchRequest<Category> = Category.fetchRequest()
               
     // predicate if you want
-              /*
-               write your code here
-               */
+           let categoryPredicate = NSPredicate(format: "NOT name MATCHES %@", selectedNotes?[0].parentCategory?.name ?? "")
+              request.predicate = categoryPredicate
               
             do {
                 category = try context.fetch(request)
     //            print(folders.count)
             } catch  {
-                print("Error fetching data of folders: \(error.localizedDescription)")
+                print("Error fetching data of categories: \(error.localizedDescription)")
             }
         }
     @IBAction func cancelBtn(_ sender: UIButton) {
@@ -71,7 +70,7 @@ extension MoveToViewController: UITableViewDelegate, UITableViewDataSource{
         
         cell.textLabel?.text = category[indexPath.row].name
         cell.backgroundColor = .white
-        cell.textLabel?.textColor = .lightGray
+        cell.textLabel?.textColor = .red
         cell.tintColor = .lightText
         return cell
     }

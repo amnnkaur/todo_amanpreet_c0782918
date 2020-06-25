@@ -16,8 +16,10 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
     @IBOutlet weak var trashBtn: UIBarButtonItem!
     @IBOutlet weak var moveToBtn: UIBarButtonItem!
     
-  var resultSearchController = UISearchController()
+    var resultSearchController = UISearchController()
     var filteredTableData = [String]()
+    
+    var archivedCategory = [Category]()
     
     var taskValue: String?
     var tasks = [Tasks]()
@@ -57,19 +59,43 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
            tableView.reloadData()
            
        }
+    
+    func loadArchive() {
+          
+                 let request: NSFetchRequest<Category> = Category.fetchRequest()
+                               
+                 // predicate if you want
+                 let categoryPredicate = NSPredicate(format: "name MATCHES %@", "Archive")
+                     request.predicate = categoryPredicate
+                               
+                 do {
+                             archivedCategory = try context.fetch(request)
+                     //            print(folders.count)
+                 } catch  {
+                         print("Error fetching data of categories: \(error.localizedDescription)")
+                     }
+                    
+      }
 
     
      func loadNotes(with predicate: NSPredicate? = nil) {
                let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
-               let folderPredicate = NSPredicate(format: "parentCategory.name=%@", selectedFolder!.name!)
-               request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-               request.predicate = folderPredicate
-               
-               do {
-                   tasks = try context.fetch(request)
-               } catch {
-                   print("Error loading notes: \(error.localizedDescription)")
-               }
+                       let categoryPredicate = NSPredicate(format: "parentCategory.name=%@", selectedFolder!.name!)
+                       request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+                       
+                       if let newPredicate = predicate{
+                           request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, newPredicate])
+                       } else {
+                           request.predicate = categoryPredicate
+                       }
+                       
+                       do {
+                           tasks = try context.fetch(request)
+                       } catch  {
+                           print("Error loading tasks: \(error.localizedDescription)")
+                       }
+                   
+                       tableView.reloadData()
            }
     
     //MARK: delete note
@@ -87,7 +113,7 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
        }
 
     //MARK: update note
-    func updateNote(with title: String, days: Int, date: Date) {
+    func updateNote(with title: String, days: Int, date: Date, description: String) {
         
         let formatter = DateFormatter()
                             formatter.dateStyle = .medium
@@ -97,6 +123,7 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
             newNote.title = title
             newNote.days = Int32(days)
             newNote.date = date
+            newNote.taskDesc = description
             newNote.parentCategory = selectedFolder
     //        notes.append(newNote)
             saveNote()
@@ -126,8 +153,8 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
                      formatter.dateStyle = .medium
                      formatter.timeStyle = .short
        
-            cell.textLabel?.text = task.title
-        cell.detailTextLabel?.text = "Days: \(task.days) \n Due Date:\(formatter.string(from: task.date!))"
+        cell.textLabel?.text = (task.title)
+        cell.detailTextLabel?.text = "Days Due: \(task.days)"
         
             let backgroundView = UIView()
             backgroundView.backgroundColor = .lightGray

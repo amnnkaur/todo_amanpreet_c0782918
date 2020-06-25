@@ -8,11 +8,15 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class CategoryTableViewController: UITableViewController {
     
     var category = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var archieved = [Category]()
+    let dateFormatter = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,10 @@ class CategoryTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
          loadFolder()
+//        archiveCategory()
+        pushNotifications()
+       
+        dateFormatter.dateFormat = "yyyy-MM-dd"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,6 +120,85 @@ class CategoryTableViewController: UITableViewController {
     }
     */
 
+    func pushNotifications() {
+    
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+        if success {
+            NotificationCenter.default.addObserver(self, selector: #selector(self.notifications), name: UIApplication.willResignActiveNotification, object: nil)
+        } else if let error = error {
+            print(error.localizedDescription)
+            }
+        }
+    }
+            @objc func notifications() {
+                
+                var tasks = [Tasks]()
+                let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+                
+                do {
+                    tasks = try context.fetch(request)
+                } catch  {
+                    print("Error loading tasks: \(error.localizedDescription)")
+                }
+                
+                let formatter = DateFormatter()
+                    formatter.dateStyle = .medium
+                    formatter.timeStyle = .short
+                
+                for task in tasks{
+                   
+                    let calendar = Calendar.current
+                    let date1 = calendar.startOfDay(for: Date())
+                    let date2 = calendar.startOfDay(for: task.date!)
+                    let components = calendar.dateComponents([.day], from: date1, to: date2)
+
+                    if components.day! == 1 {
+
+                        let content = UNMutableNotificationContent()
+                        content.title = "Task due: \(task.title ?? "No title")"
+                        content.sound = .default
+                        content.body = "Due Date: \(task.date ?? Date())"
+
+    //                    let targetDate = Date().addingTimeInterval(10)
+                        var dateComponents = DateComponents()
+                        dateComponents.hour = calendar.component(.hour, from: task.date!)
+                        dateComponents.minute = calendar.component(.minute, from: task.date!)
+
+                        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        //              let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+                            if error != nil {
+                                print("Error while generating notification: \(error?.localizedDescription)")
+                            }
+                        })
+                    }
+                }
+            
+    }
+           
+
+    
+    
+//    func archiveCategory() {
+//        let request: NSFetchRequest<Category> = Category.fetchRequest()
+//
+//        do {
+//            archieved = try context.fetch(request)
+//        } catch {
+//            print("Error while loading categories: \(error.localizedDescription)")
+//        }
+//
+//        let archivedName = self.archieved.map{$0.name}
+//            guard !archivedName.contains("Archive") else {
+//                    return
+//                }
+//        let newCategory = Category(context: self.context)
+//
+//            newCategory.name = "Archive"
+//            self.archieved.append(newCategory)
+//            self.savefolders()
+//    }
     
     // MARK: - Navigation
 

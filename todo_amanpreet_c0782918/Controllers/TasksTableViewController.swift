@@ -87,7 +87,11 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
        }
 
     //MARK: update note
-    func updateNote(with title: String, days: Int, date: String) {
+    func updateNote(with title: String, days: Int, date: Date) {
+        
+        let formatter = DateFormatter()
+                            formatter.dateStyle = .medium
+                            formatter.timeStyle = .short
             tasks = []
             let newNote = Tasks(context: context)
             newNote.title = title
@@ -117,13 +121,23 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath)
           let task = tasks[indexPath.row]
+        
+        let formatter = DateFormatter()
+                     formatter.dateStyle = .medium
+                     formatter.timeStyle = .short
        
             cell.textLabel?.text = task.title
-            cell.detailTextLabel?.text = task.date
+        cell.detailTextLabel?.text = "Days: \(task.days) \n Due Date:\(formatter.string(from: task.date!))"
         
             let backgroundView = UIView()
             backgroundView.backgroundColor = .lightGray
             cell.selectedBackgroundView = backgroundView
+        
+        if task.date! >= Date(){
+            cell.backgroundColor = .green
+        }else{
+            cell.backgroundColor = .red
+        }
       
 
             return cell
@@ -235,7 +249,9 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     @IBAction func sortBtn(_ sender: UIBarButtonItem) {
-       
+//       let sort = self.tasks
+//              self.tasks = sort.sorted { $0.title < $1.title }
+//                 self.tableView.reloadData()
         
         
     }

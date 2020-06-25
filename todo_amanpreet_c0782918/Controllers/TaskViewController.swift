@@ -18,6 +18,7 @@ class TaskViewController: UIViewController {
     @IBOutlet weak var taskName: UITextField!
     @IBOutlet weak var noOfDays: UITextField!
     @IBOutlet weak var dateTxtField: UITextField!
+    let datePickerView:UIDatePicker = UIDatePicker()
     
     
 //    var tasks = [Tasks]()
@@ -43,7 +44,6 @@ class TaskViewController: UIViewController {
 
     func addDatePicker(){
            
-        let datePickerView:UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePicker.Mode.dateAndTime
         dateTxtField.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(TaskViewController.datePickerValueChanged), for: UIControl.Event.valueChanged)
@@ -68,7 +68,7 @@ class TaskViewController: UIViewController {
                let addAction = UIAlertAction(title: "Yes", style: .default) { (action) in
            
                
-                self.delegate?.updateNote(with: self.taskName.text!, days: Int(self.noOfDays.text!)!, date: self.dateTxtField.text!)
+                self.delegate?.updateNote(with: self.taskName.text!, days: Int(self.noOfDays.text!)!, date: self.datePickerView.date)
                 
                 self.taskName.text = ""
                 self.noOfDays.text = ""

@@ -48,34 +48,45 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Mqs-UJ-vGh">
-                                <rect key="frame" x="0.0" y="597" width="414" height="216"/>
-                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IqW-Kw-oK9">
+                                <rect key="frame" x="175" y="374" width="65" height="30"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addTask:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H6u-uL-XYW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Aex-2E-Wse" secondAttribute="trailing" constant="20" id="2Eg-Qi-jXq"/>
                             <constraint firstItem="w0J-9f-WhG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3mP-MF-urV"/>
-                            <constraint firstItem="Mqs-UJ-vGh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4MC-zo-ATM"/>
                             <constraint firstItem="Aex-2E-Wse" firstAttribute="top" secondItem="ZXQ-35-35Q" secondAttribute="bottom" constant="42" id="7ZT-tX-heu"/>
                             <constraint firstItem="Aex-2E-Wse" firstAttribute="leading" secondItem="RQK-MK-93X" secondAttribute="trailing" constant="17" id="7ho-9U-tno"/>
+                            <constraint firstItem="IqW-Kw-oK9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="175" id="GoZ-Nb-Ct2"/>
                             <constraint firstItem="RQK-MK-93X" firstAttribute="top" secondItem="o48-CJ-8Kb" secondAttribute="bottom" constant="55" id="JwS-FS-qSj"/>
                             <constraint firstItem="o48-CJ-8Kb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="NQc-bq-g1G"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IqW-Kw-oK9" secondAttribute="bottom" constant="409" id="Plc-Bw-Mq4"/>
                             <constraint firstItem="BdB-2n-jg7" firstAttribute="leading" secondItem="w0J-9f-WhG" secondAttribute="trailing" constant="70" id="ajg-f4-7Nf"/>
                             <constraint firstItem="RQK-MK-93X" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="fCs-Qh-TB3"/>
                             <constraint firstItem="ZXQ-35-35Q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="28" id="fHs-bo-XUV"/>
-                            <constraint firstItem="Mqs-UJ-vGh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="fgn-yz-qwq"/>
                             <constraint firstItem="o48-CJ-8Kb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="35" id="iwS-ig-MyY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZXQ-35-35Q" secondAttribute="trailing" constant="20" id="jQo-0t-ZhD"/>
+                            <constraint firstItem="IqW-Kw-oK9" firstAttribute="top" secondItem="BdB-2n-jg7" secondAttribute="bottom" constant="70" id="kIa-Sz-fxg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IqW-Kw-oK9" secondAttribute="trailing" constant="174" id="m6F-I5-A7W"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BdB-2n-jg7" secondAttribute="trailing" constant="20" id="s1U-q0-LU9"/>
                             <constraint firstItem="BdB-2n-jg7" firstAttribute="top" secondItem="Aex-2E-Wse" secondAttribute="bottom" constant="44" id="sZq-i8-YsL"/>
-                            <constraint firstItem="Mqs-UJ-vGh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tgO-gM-QHV"/>
                             <constraint firstItem="ZXQ-35-35Q" firstAttribute="leading" secondItem="o48-CJ-8Kb" secondAttribute="trailing" constant="21" id="u6l-i3-5gZ"/>
                             <constraint firstItem="w0J-9f-WhG" firstAttribute="top" secondItem="RQK-MK-93X" secondAttribute="bottom" constant="57" id="wwM-ab-D2s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Task" id="E2c-va-sLI"/>
+                    <connections>
+                        <outlet property="dateTxtField" destination="BdB-2n-jg7" id="X58-oC-dNs"/>
+                        <outlet property="noOfDays" destination="Aex-2E-Wse" id="Fhh-zK-Dnj"/>
+                        <outlet property="taskName" destination="ZXQ-35-35Q" id="uQo-b2-E2F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -288,13 +299,17 @@
         <!--Navigation Controller-->
         <scene sceneID="p2R-Pe-v7S">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fEe-EO-514" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="fEe-EO-514" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AU4-hH-Uio">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ihk-fm-Dsd">
+                        <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="t8P-aZ-RPI" kind="relationship" relationship="rootViewController" id="g4m-qX-sde"/>
                     </connections>

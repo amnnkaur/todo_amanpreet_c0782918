@@ -14,6 +14,8 @@ class TasksTableViewController: UITableViewController {
     @IBOutlet weak var trashBtn: UIBarButtonItem!
     @IBOutlet weak var moveToBtn: UIBarButtonItem!
     
+  
+    
     var taskValue: String?
     var tasks = [Tasks]()
     var selectedFolder: Category? {

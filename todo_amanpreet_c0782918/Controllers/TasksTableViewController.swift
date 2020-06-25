@@ -59,7 +59,7 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
        }
 
     
-     func loadNotes() {
+     func loadNotes(with predicate: NSPredicate? = nil) {
                let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
                let folderPredicate = NSPredicate(format: "parentCategory.name=%@", selectedFolder!.name!)
                request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
@@ -120,9 +120,11 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
        
             cell.textLabel?.text = task.title
             cell.detailTextLabel?.text = task.date
+        
             let backgroundView = UIView()
             backgroundView.backgroundColor = .lightGray
             cell.selectedBackgroundView = backgroundView
+      
 
             return cell
         
@@ -209,7 +211,7 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     @IBAction func editTask(_ sender: UIBarButtonItem) {
-        editMode = !editMode
+              editMode = !editMode
                tableView.setEditing(editMode ? true: false, animated: true)
                trashBtn.isEnabled = !trashBtn.isEnabled
                moveToBtn.isEnabled = !moveToBtn.isEnabled
@@ -225,12 +227,15 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         return editMode ? false : true
     }
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        print(text)
+//        guard let text = searchController.searchBar.text else { return }
+        let text = searchController.searchBar.text
+        var titlePredicate: NSPredicate = NSPredicate()
+        titlePredicate = NSPredicate(format: "title CONTAINS[cd] '\(text ?? "")'")
+        loadNotes(with: titlePredicate)
     }
     
     @IBAction func sortBtn(_ sender: UIBarButtonItem) {
-        
+       
         
         
     }

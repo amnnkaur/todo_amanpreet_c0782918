@@ -119,8 +119,9 @@ class CategoryTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        let destination = segue.destination as! TasksTableViewController
-               if let indexPath = tableView.indexPathForSelectedRow{
+       if let indexPath = tableView.indexPathForSelectedRow{
+                   let destination = segue.destination as! TasksTableViewController
+
                    destination.selectedFolder = category[indexPath.row]
                }
     }

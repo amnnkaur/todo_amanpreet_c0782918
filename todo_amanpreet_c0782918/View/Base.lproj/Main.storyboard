@@ -134,6 +134,14 @@
                             <outlet property="delegate" destination="t8P-aZ-RPI" id="r1W-1R-kTx"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="arC-NQ-BKC"/>
+                        <barButtonItem title="Archive" id="H4S-Tn-5W6">
+                            <connections>
+                                <segue destination="Vcc-lK-TVl" kind="show" id="L9f-vM-dJ7"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Category" id="eI6-G0-P80">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="folder.badge.plus" catalog="system" id="zag-ng-hRw">
                             <connections>
@@ -141,6 +149,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0l4-Ni-VeO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -228,6 +237,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tpa-08-sgF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2444.9275362318845" y="101.78571428571428"/>
+        </scene>
+        <!--Archive Folder-->
+        <scene sceneID="0SB-Qe-DFH">
+            <objects>
+                <tableViewController id="Vcc-lK-TVl" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wvZ-z4-9Xa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="archievedCell" textLabel="48j-Vv-wsV" style="IBUITableViewCellStyleDefault" id="dJX-FL-5pf">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dJX-FL-5pf" id="irX-cC-hxY">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="48j-Vv-wsV">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Vcc-lK-TVl" id="9oT-5X-QpY"/>
+                            <outlet property="delegate" destination="Vcc-lK-TVl" id="VNi-39-FcL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Archive Folder" id="BGl-JQ-GHB"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IOb-6h-uRz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1731" y="816"/>
         </scene>
         <!--Move To View Controller-->
         <scene sceneID="QrF-2K-ji5">

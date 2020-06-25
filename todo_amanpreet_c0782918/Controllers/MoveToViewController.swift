@@ -45,7 +45,10 @@ class MoveToViewController: UIViewController {
                 print("Error fetching data of folders: \(error.localizedDescription)")
             }
         }
-
+    @IBAction func cancelBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -56,4 +59,41 @@ class MoveToViewController: UIViewController {
     }
     */
 
+}
+
+extension MoveToViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return category.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "moveToCell")
+        
+        cell.textLabel?.text = category[indexPath.row].name
+        cell.backgroundColor = .white
+        cell.textLabel?.textColor = .lightGray
+        cell.tintColor = .lightText
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Move to \(category[indexPath.row].name!)", message: "Are you sure?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Move", style: .default) { (action) in
+            for note in self.selectedNotes! {
+                note.parentCategory = self.category[indexPath.row]
+            }
+            self.performSegue(withIdentifier: "dismissMoveView", sender: self)
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        let noAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        noAction.setValue(UIColor.red, forKey: "titleTextColor")
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+
+    
 }

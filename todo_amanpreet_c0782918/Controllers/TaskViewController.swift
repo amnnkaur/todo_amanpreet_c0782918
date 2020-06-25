@@ -20,8 +20,6 @@ class TaskViewController: UIViewController {
     @IBOutlet weak var dateTxtField: UITextField!
     
     
-    
-    
     var tasks = [Tasks]()
     
     var selectedNote: Tasks? {
@@ -46,7 +44,7 @@ class TaskViewController: UIViewController {
     func addDatePicker(){
            
         let datePickerView:UIDatePicker = UIDatePicker()
-        datePickerView.datePickerMode = UIDatePicker.Mode.date
+        datePickerView.datePickerMode = UIDatePicker.Mode.dateAndTime
         dateTxtField.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(TaskViewController.datePickerValueChanged), for: UIControl.Event.valueChanged)
         
@@ -58,7 +56,7 @@ class TaskViewController: UIViewController {
 
         dateFormatter.dateStyle = DateFormatter.Style.medium
 
-        dateFormatter.timeStyle = DateFormatter.Style.none
+        dateFormatter.timeStyle = DateFormatter.Style.short
 
         dateTxtField.text = dateFormatter.string(from: sender.date)
 

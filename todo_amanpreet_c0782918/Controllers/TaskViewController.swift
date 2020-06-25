@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import CoreData
 
 class TaskViewController: UIViewController {
     
-//
 //    var taskTitle: String?
 //    var days: Int32?
 //    var date: Date?
@@ -20,7 +20,7 @@ class TaskViewController: UIViewController {
     @IBOutlet weak var dateTxtField: UITextField!
     
     
-    var tasks = [Tasks]()
+//    var tasks = [Tasks]()
     
     var selectedNote: Tasks? {
             didSet{
@@ -66,17 +66,14 @@ class TaskViewController: UIViewController {
         
         let alert = UIAlertController(title: "Are you sure you want to add the task?", message: "", preferredStyle: .alert)
                let addAction = UIAlertAction(title: "Yes", style: .default) { (action) in
-                   let taskVar = self.tasks.map {$0.title}
-
-                guard !taskVar.contains(self.taskName.text) else {
-                       return self.showAlert()
-                   }
+           
+               
+                self.delegate?.updateNote(with: self.taskName.text!, days: Int(self.noOfDays.text!)!, date: self.dateTxtField.text!)
                 
-                self.taskName.text = self.selectedNote?.title
-//                self.noOfDays.text = self.selectedNote?.days
-                self.dateTxtField.text = self.selectedNote?.date
-
-//                   self.updateTask(with: taskName.text!, description: noOfDays.text!, date: self.dateTxtField.text)
+                self.taskName.text = ""
+                self.noOfDays.text = ""
+                self.dateTxtField.text = ""
+        
                }
                
                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -97,13 +94,6 @@ class TaskViewController: UIViewController {
                alert.addAction(okAction)
                present(alert, animated: true, completion: nil)
            }
-        
-        override func viewWillDisappear(_ animated: Bool) {
-            if editMode{
-                delegate!.deleteNote(task: selectedNote!)
-            }
-            delegate?.updateNote(with: taskName.text!, days: Int(noOfDays.text!)!, date: dateTxtField.text!)
-        }
     
     
 }

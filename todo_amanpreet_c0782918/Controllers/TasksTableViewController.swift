@@ -9,12 +9,15 @@
 import UIKit
 import CoreData
 
-class TasksTableViewController: UITableViewController {
+class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
+    
+    
     
     @IBOutlet weak var trashBtn: UIBarButtonItem!
     @IBOutlet weak var moveToBtn: UIBarButtonItem!
     
-  
+  var resultSearchController = UISearchController()
+    var filteredTableData = [String]()
     
     var taskValue: String?
     var tasks = [Tasks]()
@@ -24,6 +27,7 @@ class TasksTableViewController: UITableViewController {
             loadNotes()
         }
     }
+
     
     var editMode: Bool = false
     
@@ -38,13 +42,22 @@ class TasksTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
+        let search = UISearchController(searchResultsController: nil)
+        search.searchResultsUpdater = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "Type something here to search"
+        navigationItem.searchController = search
+        
+        }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
            
            tableView.reloadData()
            
        }
+
     
      func loadNotes() {
                let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
@@ -95,21 +108,26 @@ class TasksTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return tasks.count
+        
+            return tasks.count
+        
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath)
-        
-        let task = tasks[indexPath.row]
-        cell.textLabel?.text = task.title
-        cell.detailTextLabel?.text = task.date
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = .lightGray
-        cell.selectedBackgroundView = backgroundView
+          let task = tasks[indexPath.row]
+       
+            cell.textLabel?.text = task.title
+            cell.detailTextLabel?.text = task.date
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = .lightGray
+            cell.selectedBackgroundView = backgroundView
 
-        return cell
+            return cell
+        
+        
+        
     }
     
 
@@ -206,6 +224,17 @@ class TasksTableViewController: UITableViewController {
         
         return editMode ? false : true
     }
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        print(text)
+    }
+    
+    @IBAction func sortBtn(_ sender: UIBarButtonItem) {
+        
+        
+        
+    }
+    
 
     @IBAction func unwindToTasksTableVC(_ unwindSegue: UIStoryboardSegue) {
     //        let sourceViewController = unwindSegue.source

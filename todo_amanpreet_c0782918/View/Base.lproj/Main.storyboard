@@ -149,28 +149,28 @@
         <!--Tasks-->
         <scene sceneID="6t8-JI-g6P">
             <objects>
-                <tableViewController id="3Ak-Dq-qlG" customClass="TasksTableViewController" customModule="todo_amanpreet_c0782918" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TasksTableVC" id="3Ak-Dq-qlG" customClass="TasksTableViewController" customModule="todo_amanpreet_c0782918" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="yMf-j0-eKm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="taskCell" textLabel="2E6-Ps-kv9" detailTextLabel="RZh-vE-bA0" style="IBUITableViewCellStyleSubtitle" id="1rM-Au-Op1">
-                                <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="taskCell" textLabel="EIZ-1k-flv" detailTextLabel="wJu-S4-Lg0" rowHeight="58" style="IBUITableViewCellStyleSubtitle" id="1rM-Au-Op1">
+                                <rect key="frame" x="0.0" y="28" width="414" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1rM-Au-Op1" id="kJw-ut-iQ4">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2E6-Ps-kv9">
-                                            <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EIZ-1k-flv">
+                                            <rect key="frame" x="20" y="9" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RZh-vE-bA0">
-                                            <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wJu-S4-Lg0">
+                                            <rect key="frame" x="20" y="32.5" width="33" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -206,11 +206,18 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Tasks" id="r6a-PK-uoe">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="H2h-rE-QuR">
-                            <connections>
-                                <action selector="editTask:" destination="3Ak-Dq-qlG" id="5IU-m2-Zk2"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="ellipsis" catalog="system" id="H2h-rE-QuR">
+                                <connections>
+                                    <action selector="editTask:" destination="3Ak-Dq-qlG" id="5IU-m2-Zk2"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="arrow.up.arrow.down" catalog="system" id="hNw-SI-Bak">
+                                <connections>
+                                    <action selector="sortBtn:" destination="3Ak-Dq-qlG" id="p6e-9C-4kP"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -220,7 +227,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tpa-08-sgF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2445" y="102"/>
+            <point key="canvasLocation" x="2444.9275362318845" y="101.78571428571428"/>
         </scene>
         <!--Move To View Controller-->
         <scene sceneID="QrF-2K-ji5">
@@ -320,6 +327,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.up.arrow.down" catalog="system" width="128" height="96"/>
         <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="folder.badge.plus" catalog="system" width="128" height="86"/>

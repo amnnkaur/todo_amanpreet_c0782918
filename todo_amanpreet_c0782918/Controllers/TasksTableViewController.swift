@@ -111,6 +111,23 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
                print("Error saving the context: \(error.localizedDescription)")
            }
        }
+    
+    func loadArchiveCategory() {
+           
+                  let request: NSFetchRequest<Category> = Category.fetchRequest()
+                                
+                  // predicate if you want
+                  let categoryPredicate = NSPredicate(format: "name MATCHES %@", "Archive")
+                      request.predicate = categoryPredicate
+                                
+                  do {
+                              archivedCategory = try context.fetch(request)
+                      //            print(folders.count)
+                  } catch  {
+                          print("Error fetching data of categories: \(error.localizedDescription)")
+                      }
+                     
+       }
 
     //MARK: update note
     func updateNote(with title: String, days: Int, date: Date, description: String) {
@@ -154,7 +171,7 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
                      formatter.timeStyle = .short
        
         cell.textLabel?.text = (task.title)
-        cell.detailTextLabel?.text = "Days Due: \(task.days)"
+        cell.detailTextLabel?.text = "Days: \(task.days) Due Date: \(task.date!)"
         
             let backgroundView = UIView()
             backgroundView.backgroundColor = .lightGray
@@ -271,14 +288,23 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
 //        guard let text = searchController.searchBar.text else { return }
         let text = searchController.searchBar.text
         var titlePredicate: NSPredicate = NSPredicate()
-        titlePredicate = NSPredicate(format: "title CONTAINS[cd] '\(text ?? "")'")
+        titlePredicate = NSPredicate(format: "title MATCHES[cd] '\(text ?? "")'")
         loadNotes(with: titlePredicate)
     }
     
     @IBAction func sortBtn(_ sender: UIBarButtonItem) {
-//       let sort = self.tasks
-//              self.tasks = sort.sorted { $0.title < $1.title }
-//                 self.tableView.reloadData()
+        let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+           let categoryPredicate = NSPredicate(format: "parentCategory.name=%@", selectedFolder!.name!)
+           request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+           request.predicate = categoryPredicate
+           
+           do {
+               tasks = try context.fetch(request)
+           } catch  {
+               print("Error loading tasks: \(error.localizedDescription)")
+           }
+       
+           tableView.reloadData()
         
         
     }

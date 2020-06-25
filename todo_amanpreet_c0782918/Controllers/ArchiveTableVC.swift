@@ -100,7 +100,7 @@ class ArchiveTableVC: UITableViewController {
     
     func loadTasks()  {
         let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
-        let categoryPredicate = NSPredicate(format: "parentCategory.categoryName=%@",  "Archive")
+        let categoryPredicate = NSPredicate(format: "parentCategory.name=%@",  "Archive")
              request.predicate = categoryPredicate
                do {
                   completedTask = try context.fetch(request)

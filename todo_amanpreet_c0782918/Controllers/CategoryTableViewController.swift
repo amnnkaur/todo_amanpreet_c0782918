@@ -27,7 +27,7 @@ class CategoryTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-         loadFolder()
+        loadFolder()
 //        archiveCategory()
         pushNotifications()
        
@@ -180,25 +180,25 @@ class CategoryTableViewController: UITableViewController {
 
     
     
-//    func archiveCategory() {
-//        let request: NSFetchRequest<Category> = Category.fetchRequest()
-//
-//        do {
-//            archieved = try context.fetch(request)
-//        } catch {
-//            print("Error while loading categories: \(error.localizedDescription)")
-//        }
-//
-//        let archivedName = self.archieved.map{$0.name}
-//            guard !archivedName.contains("Archive") else {
-//                    return
-//                }
-//        let newCategory = Category(context: self.context)
-//
-//            newCategory.name = "Archive"
-//            self.archieved.append(newCategory)
-//            self.savefolders()
-//    }
+    func archiveCategory() {
+        let request: NSFetchRequest<Category> = Category.fetchRequest()
+
+        do {
+            archieved = try context.fetch(request)
+        } catch {
+            print("Error while loading categories: \(error.localizedDescription)")
+        }
+
+        let archivedName = self.archieved.map{$0.name}
+            guard !archivedName.contains("Archive") else {
+                    return
+                }
+        let newCategory = Category(context: self.context)
+
+            newCategory.name = "Archive"
+            self.archieved.append(newCategory)
+            self.savefolders()
+    }
     
     // MARK: - Navigation
 

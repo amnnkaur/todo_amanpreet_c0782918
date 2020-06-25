@@ -67,7 +67,7 @@ class CategoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
           let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
 
-            cell.textLabel?.text = category[indexPath.row].name
+        cell.textLabel?.text = category[indexPath.row].name
 //            cell.textLabel?.textColor = .lightGray
 //            cell.detailTextLabel?.textColor = .lightGray
             cell.detailTextLabel?.text = "\(category[indexPath.row].tasks?.count ?? 0)"

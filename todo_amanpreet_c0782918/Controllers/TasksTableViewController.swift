@@ -74,10 +74,12 @@ class TasksTableViewController: UITableViewController {
        }
 
     //MARK: update note
-        func updateNote(with title: String) {
+    func updateNote(with title: String, days: Int, date: String) {
             tasks = []
             let newNote = Tasks(context: context)
             newNote.title = title
+            newNote.days = Int32(days)
+            newNote.date = date
             newNote.parentCategory = selectedFolder
     //        notes.append(newNote)
             saveNote()
@@ -102,7 +104,7 @@ class TasksTableViewController: UITableViewController {
         
         let task = tasks[indexPath.row]
         cell.textLabel?.text = task.title
-        
+        cell.detailTextLabel?.text = task.date
         let backgroundView = UIView()
         backgroundView.backgroundColor = .lightGray
         cell.selectedBackgroundView = backgroundView
@@ -205,10 +207,9 @@ class TasksTableViewController: UITableViewController {
         return editMode ? false : true
     }
 
-    @IBAction func unwindToTaskTableVC(_ unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwindToTasksTableVC(_ unwindSegue: UIStoryboardSegue) {
     //        let sourceViewController = unwindSegue.source
             // Use data from the view controller which initiated the unwind segue
-            print("Unwind segue")
            
             saveNote()
             loadNotes()

@@ -261,7 +261,7 @@
         <!--Archive Folder-->
         <scene sceneID="0SB-Qe-DFH">
             <objects>
-                <tableViewController id="Vcc-lK-TVl" sceneMemberID="viewController">
+                <tableViewController id="Vcc-lK-TVl" customClass="ArchiveTableVC" customModule="todo_amanpreet_c0782918" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wvZ-z4-9Xa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -294,7 +294,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IOb-6h-uRz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1731" y="816"/>
+            <point key="canvasLocation" x="1751" y="812"/>
         </scene>
         <!--Move To View Controller-->
         <scene sceneID="QrF-2K-ji5">

@@ -20,6 +20,7 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
     var filteredTableData = [String]()
     
     var archivedCategory = [Category]()
+    var daysnumber = "0"
     
     var taskValue: String?
     var tasks = [Tasks]()
@@ -197,6 +198,61 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         // Return false if you do not want the specified item to be editable.
         return true
     }
+    
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+         let days = UITableViewRowAction(style: .normal, title: "Add Days") { (rowaction, indexPath) in
+                       
+          let alertcontroller = UIAlertController(title: "Enter number of Days", message: "", preferredStyle: .alert)
+                                         
+            alertcontroller.addTextField { (textField ) in
+            textField.placeholder = "Number of days"
+            self.daysnumber = textField.text!
+            textField.text = ""
+                                        }
+            
+            
+                let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                            CancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+                                         let AddAction = UIAlertAction(title: "Add", style: .default){
+                                             (action) in
+                                          let count = alertcontroller.textFields?.first?.text
+                                            self.tasks[indexPath.row].days += Int32(count!) ?? 0
+                                          
+                                              self.tableView.reloadData()
+                                      }
+                                  AddAction.setValue(UIColor.black, forKey: "titleTextColor")
+                                                       alertcontroller.addAction(CancelAction)
+                                                       alertcontroller.addAction(AddAction)
+                                                       self.present(alertcontroller, animated: true, completion: nil)}
+        days.backgroundColor = .systemIndigo
+
+         let deletetask = UITableViewRowAction(style: .normal, title: "Delete") { (rowaction, indexPath) in
+
+          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let ManagedContext = appDelegate.persistentContainer.viewContext
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskArray")
+             do{
+                 let data = try ManagedContext.fetch(fetchRequest)
+                 let taskitem = data[indexPath.row] as? NSManagedObject
+                self.tasks.remove(at: indexPath.row)
+              ManagedContext.delete(taskitem!)
+                 tableView.reloadData()
+                 do{
+                             try ManagedContext.save()
+                     }
+             catch{
+                  print(error)
+              }
+             }
+             catch{
+                 print(error)
+             }
+                    }
+                deletetask.backgroundColor = UIColor.red
+                return [deletetask,days]
+      }
     
 
     

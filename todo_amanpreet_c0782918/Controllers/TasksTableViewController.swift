@@ -30,7 +30,8 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
             loadNotes()
         }
     }
-
+   
+   
     
     var editMode: Bool = false
     
@@ -51,7 +52,10 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         search.searchBar.placeholder = "Type something here to search"
         navigationItem.searchController = search
         
-        }
+        loadArchive()
+        
+       
+    }
     
     
     
@@ -170,9 +174,10 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         let formatter = DateFormatter()
                      formatter.dateStyle = .medium
                      formatter.timeStyle = .short
+        formatter.dateFormat = "MMM d, h:mm a"
        
         cell.textLabel?.text = (task.title)
-        cell.detailTextLabel?.text = "Days: \(task.days) Due Date: \(task.date!)"
+        cell.detailTextLabel?.text = "Days: \(task.days)                             Due Date: \(formatter.string(from: task.date!))"
         
             let backgroundView = UIView()
             backgroundView.backgroundColor = .lightGray
@@ -344,7 +349,7 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
 //        guard let text = searchController.searchBar.text else { return }
         let text = searchController.searchBar.text
         var titlePredicate: NSPredicate = NSPredicate()
-        titlePredicate = NSPredicate(format: "title MATCHES[cd] '\(text ?? "")'")
+        titlePredicate = NSPredicate(format: "title CONTAINS[cd] '\(text ?? "")'")
         loadNotes(with: titlePredicate)
     }
     
@@ -361,7 +366,6 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
            }
        
            tableView.reloadData()
-        
         
     }
     

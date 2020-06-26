@@ -13,7 +13,7 @@ class MoveToViewController: UIViewController {
     
     
        var category = [Category]()
-       ///computed property
+       
        var selectedNotes: [Tasks]? {
            didSet{
                loadFolders()
@@ -32,14 +32,12 @@ class MoveToViewController: UIViewController {
     func loadFolders() {
             
         let request: NSFetchRequest<Category> = Category.fetchRequest()
-              
-    // predicate if you want
            let categoryPredicate = NSPredicate(format: "NOT name MATCHES %@", selectedNotes?[0].parentCategory?.name ?? "")
               request.predicate = categoryPredicate
               
             do {
                 category = try context.fetch(request)
-    //            print(folders.count)
+   
             } catch  {
                 print("Error fetching data of categories: \(error.localizedDescription)")
             }

@@ -43,8 +43,6 @@ class ArchiveTableVC: UITableViewController {
           let cell = tableView.dequeueReusableCell(withIdentifier: "archievedCell", for: indexPath)
               let completeTask = completedTask[indexPath.row]
               cell.textLabel?.text = completeTask.title
-              cell.detailTextLabel?.text = "Archived"
-
               return cell
     }
     
@@ -61,9 +59,9 @@ class ArchiveTableVC: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-             deleteTask(task: completedTask[indexPath.row])
-                                 saveTask()
-                                 completedTask.remove(at: indexPath.row)
+            deleteTask(task: completedTask[indexPath.row])
+            saveTask()
+            completedTask.remove(at: indexPath.row)
                                  // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {

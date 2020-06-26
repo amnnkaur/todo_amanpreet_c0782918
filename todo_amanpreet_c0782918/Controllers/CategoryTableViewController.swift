@@ -28,7 +28,7 @@ class CategoryTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         loadFolder()
-//        archiveCategory()
+        archiveCategory()
         pushNotifications()
        
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -38,15 +38,18 @@ class CategoryTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadFolder() {
-    let request: NSFetchRequest<Category> = Category.fetchRequest()
-        
-        do {
-           category = try context.fetch(request)
-        } catch  {
-            print("Error Loading Folders: \(error.localizedDescription)")
-        }
-    }
+     func loadFolder() {
+           let request: NSFetchRequest<Category> = Category.fetchRequest()
+           let categoryPredicate = NSPredicate(format: "NOT name MATCHES %@", "Archive")
+               request.predicate = categoryPredicate
+           
+           do {
+               category = try context.fetch(request)
+           } catch {
+               print("Error while loading categories: \(error.localizedDescription)")
+           }
+           
+       }
 
     func savefolders()  {
         do {

@@ -21,6 +21,10 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating{
     var archivedCategory = [Category]()
     var daysnumber = "0"
     
+    
+    let pickADate = UIDatePicker()
+    var dateField = UITextField()
+    
     var taskValue: String?
     var tasks = [Tasks]()
     var selectedFolder: Category? {
@@ -53,10 +57,41 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating{
         
         loadArchive()
         
+    
+    
+       
+//        datePickerView.addTarget(self, action: #selector(TasksTableViewController.datePickerValueChanged), for: UIControlEvents.valueChanged)
+
+        
        
     }
     
-    
+   func generatePicker(){
+            
+          pickADate.datePickerMode = UIDatePicker.Mode.dateAndTime
+
+            let toolbar = UIToolbar()
+            toolbar.sizeToFit()
+            
+            //bar button
+            let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+            toolbar.setItems([doneBtn], animated: true)
+            
+            dateField.inputAccessoryView = toolbar
+            dateField.inputView = pickADate
+        }
+        
+        @objc func donePressed() {
+           
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            
+            dateField.text = formatter.string(from: pickADate.date)
+    //        self.datePicker.endEditing(true)
+
+            self.dateField.endEditing(true)
+        }
     
     override func viewWillAppear(_ animated: Bool) {
            
@@ -238,12 +273,14 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating{
 
          let days = UITableViewRowAction(style: .normal, title: "Add Days") { (rowaction, indexPath) in
                        
-          let alertcontroller = UIAlertController(title: "Enter number of Days", message: "", preferredStyle: .alert)
+          let alertcontroller = UIAlertController(title: "Enter new Date", message: "", preferredStyle: .alert)
                                          
             alertcontroller.addTextField { (textField ) in
-            textField.placeholder = "Number of days"
-            self.daysnumber = textField.text!
-            textField.text = ""
+           
+                self.dateField = textField
+                self.generatePicker()
+                self.saveNote()
+                self.loadNotes()
                                         }
             
             
@@ -252,7 +289,22 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating{
                                          let AddAction = UIAlertAction(title: "Add", style: .default){
                                              (action) in
                                           let count = alertcontroller.textFields?.first?.text
-                                            self.tasks[indexPath.row].days += Int32(count!) ?? 0
+                                            
+                                            let oldDate = self.tasks[indexPath.row].date
+                                            let newDate = self.pickADate.date
+                                            let todayDate = Date()
+                                            
+                                            let calendar = Calendar.current
+                                                  let currentDate = calendar.startOfDay(for: todayDate)
+                                                  let assignedDate = calendar.startOfDay(for: newDate)
+                                                  
+                                                  let components = calendar.dateComponents([.day], from: currentDate, to: assignedDate)
+                                            
+                                            self.tasks[indexPath.row].days = Int32(components.day!)
+                                            self.tasks[indexPath.row].date = self.pickADate.date
+                                            
+                                            self.saveNote()
+                                            self.loadNotes()
                                           
                                               self.tableView.reloadData()
                                       }

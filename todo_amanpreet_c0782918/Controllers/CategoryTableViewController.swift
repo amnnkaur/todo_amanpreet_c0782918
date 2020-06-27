@@ -161,12 +161,12 @@ class CategoryTableViewController: UITableViewController {
                         content.title = "Task due: \(task.title ?? "No title")"
                         content.sound = .default
                         content.body = "Due Date: \(task.date ?? Date())"
-                        content.badge = 1
+//                        content.badge = 1
 
     //                    let targetDate = Date().addingTimeInterval(10)
                         var dateComponents = DateComponents()
-                        dateComponents.hour = 9
-                        dateComponents.minute = 00
+                        dateComponents.hour = 21
+                        dateComponents.minute = 25
 
                         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         //              let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)

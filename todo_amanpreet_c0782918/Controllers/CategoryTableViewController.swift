@@ -161,6 +161,7 @@ class CategoryTableViewController: UITableViewController {
                         content.title = "Task due: \(task.title ?? "No title")"
                         content.sound = .default
                         content.body = "Due Date: \(task.date ?? Date())"
+                        content.badge = 1
 
     //                    let targetDate = Date().addingTimeInterval(10)
                         var dateComponents = DateComponents()

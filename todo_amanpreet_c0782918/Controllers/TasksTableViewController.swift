@@ -9,8 +9,7 @@
 import UIKit
 import CoreData
 
-class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
-    
+class TasksTableViewController: UITableViewController, UISearchResultsUpdating{
     
     
     @IBOutlet weak var trashBtn: UIBarButtonItem!
@@ -166,6 +165,31 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         
     }
 
+    override func tableView(_ tableView: UITableView,
+      contextMenuConfigurationForRowAt indexPath: IndexPath,
+      point: CGPoint) -> UIContextMenuConfiguration? {
+
+//        let favorite = UIAction(title: "Favorite") { _ in print("fav") }
+//        let share = UIAction(title: "Move To") { _ in print("share")}
+//
+        let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"),
+        attributes: .destructive) { _ in
+            
+        
+           
+            self.deleteNote(task: self.tasks[indexPath.row])
+            self.saveNote()
+            self.tasks.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+           
+                      }
+
+      return UIContextMenuConfiguration(identifier: nil,
+        previewProvider: nil) { _ in
+        UIMenu(title: "Actions", children: [ delete])
+      }
+    }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath)
@@ -177,8 +201,13 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         formatter.dateFormat = "MMM d, h:mm a"
        
         cell.textLabel?.text = (task.title)
-        cell.detailTextLabel?.text = "Days: \(task.days)                             Due Date: \(formatter.string(from: task.date!))"
-        
+        if task.days >= 0 {
+             cell.detailTextLabel?.text = "Days: \(task.days)                             Due Date: \(formatter.string(from: task.date!))"
+        }
+        else {
+            cell.detailTextLabel?.text = "Your task is overdue by Due date"
+        }
+
             let backgroundView = UIView()
             backgroundView.backgroundColor = .lightGray
             cell.selectedBackgroundView = backgroundView
@@ -275,7 +304,9 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         }    
     }
     
-
+//    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+//        return nil
+//    }
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -345,6 +376,8 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         
         return editMode ? false : true
     }
+    
+    
     func updateSearchResults(for searchController: UISearchController) {
 //        guard let text = searchController.searchBar.text else { return }
         let text = searchController.searchBar.text
@@ -383,3 +416,4 @@ class TasksTableViewController: UITableViewController, UISearchResultsUpdating {
         }
 
 }
+

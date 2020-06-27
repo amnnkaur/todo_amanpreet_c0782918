@@ -41,6 +41,7 @@ class TaskViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         addDatePicker()
+        noOfDays.isEnabled = false
     }
 
     func addDatePicker(){
@@ -60,6 +61,14 @@ class TaskViewController: UIViewController {
         dateFormatter.timeStyle = DateFormatter.Style.short
 
         dateTxtField.text = dateFormatter.string(from: sender.date)
+        
+        let calendar = Calendar.current
+        let currentDate = calendar.startOfDay(for: Date())
+        let assignedDate = calendar.startOfDay(for: sender.date)
+        
+        let components = calendar.dateComponents([.day], from: currentDate, to: assignedDate)
+        
+        noOfDays.text = String(components.day!)
 
     }
     
@@ -75,6 +84,10 @@ class TaskViewController: UIViewController {
                 self.noOfDays.text = ""
                 self.dateTxtField.text = ""
                 self.taskDescription.text = ""
+                
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "") as! TasksTableViewController
+            
+            self.navigationController?.popViewController(animated: true)
         
                }
                
